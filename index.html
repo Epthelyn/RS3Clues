@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body>
+    <div class="inputText">Simulation:</div>
+    <select id="sim_action">
+        <option value="" selected>Select a simulation type</option>
+        <option value="roll_single">Open one casket</option>
+        <option value="roll_multi">Open multiple caskets </option>
+        <option value="roll_log">Open caskets until log completion</option>
+        <option value="roll_nth">Open caskets until N uniques</option>
+    </select><br>
+    <div class="inputText">Clue Tier:</div>
+    <select id="sim_tier">
+        <option value="Easy">Easy</option>
+        <option value="Medium">Medium</option>
+        <option value="Hard">Hard</option>
+        <option value="Elite">Elite</option>
+        <option value="Master">Master</option>
+    </select><span class="warning">Hard/Elite/Master data from <a href="https://cluesimulator.com">https://cluesimulator.com</a>. Easy/Medium unique rates may be incorrect</span>
+    <div class="simOptions" simAction="roll_single">
+        <div class="inputText"></div> <input type="button" class="simSubmit" value="Open Casket">
+    </div>
+    <div class="simOptions" simAction="roll_multi">
+        <div class="inputText">Number of caskets</div> <input type="text" value=1 id="roll_multi_input"><br><div class="inputText"></div> <input type="button" value="Open caskets" class="simSubmit">
+    </div>
+    <div class="simOptions" simAction="roll_log">
+        <div class="inputText"></div> <input type="button" value="Open caskets" class="simSubmit">
+    </div>
+    <div class="simOptions" simAction="roll_nth">
+        <div class="inputText">Number of uniques</div> <input type="text" value=1 id="roll_nth_input"><br><div class="inputText"></div> <input type="button" value="Open caskets" class="simSubmit">
+    </div>
+    <br>
+    <div class="simOutput"></div>
+
+    <script src="clues.js"></script>
+</body>
+</html>
