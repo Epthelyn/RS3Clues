@@ -34,12 +34,17 @@ th{
     line-height: 32px;
 }
 
-input{
+input[type=text]{
     height: 32px;
     background: #161E2E;
     color: #D2D6DC;
     border: none;
     outline: none;
+}
+
+input[type=checkbox]{
+    transform: scale(2);
+    margin-left: 7px;
 }
 
 select{
@@ -51,6 +56,10 @@ select{
 }
 
 input[type=button]{
+    height: 32px;
+    color: #D2D6DC;
+    border: none;
+    outline: none;
     background: #214e2b;
     width: 200px;
 }

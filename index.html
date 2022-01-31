@@ -16,6 +16,8 @@
         <option value="roll_multi">Open multiple caskets </option>
         <option value="roll_log">Open caskets until log completion</option>
         <option value="roll_nth">Open caskets until N uniques</option>
+        <option value="average_nth">Calculate average caskets for N uniques</option>
+        <option value="average_complete">Calculate average caskets for log completion</option>
     </select><br>
     <div class="inputText">Clue Tier:</div>
     <select id="sim_tier">
@@ -24,7 +26,8 @@
         <option value="Hard">Hard</option>
         <option value="Elite">Elite</option>
         <option value="Master">Master</option>
-    </select><span class="warning">Hard/Elite/Master data from <a href="https://cluesimulator.com">https://cluesimulator.com</a>. Easy/Medium unique rates may be incorrect</span>
+    </select><span class="warning">Hard/Elite/Master data from <a href="https://cluesimulator.com">https://cluesimulator.com</a>. Easy/Medium unique rates may be incorrect</span><br>
+    <div class="inputText">Reroll non-uniques: </div> <input id="reroll" type="checkbox">
     <div class="simOptions" simAction="roll_single">
         <div class="inputText"></div> <input type="button" class="simSubmit" value="Open Casket">
     </div>
@@ -36,6 +39,15 @@
     </div>
     <div class="simOptions" simAction="roll_nth">
         <div class="inputText">Number of uniques</div> <input type="text" value=1 id="roll_nth_input"><br><div class="inputText"></div> <input type="button" value="Open caskets" class="simSubmit">
+    </div>
+    <div class="simOptions" simAction="average_nth">
+        <div class="inputText">Number of uniques</div> <input type="text" value=1 id="average_nth_input_uniques"><br>
+        <div class="inputText">Simulation iterations</div> <input type="text" value=100 id="average_nth_input_iterations"><span class="warning">Large numbers may take a while to calculate, particularly for hard clues!</span><br>
+        <div class="inputText"></div> <input type="button" value="Open caskets" class="simSubmit">
+    </div>
+    <div class="simOptions" simAction="average_complete">
+        <div class="inputText">Simulation iterations</div> <input type="text" value=100 id="average_complete_input_iterations"><span class="warning">Large numbers may take a while to calculate, particularly for hard clues!</span><br>
+        <div class="inputText"></div> <input type="button" value="Open caskets" class="simSubmit">
     </div>
     <br>
     <div class="simOutput"></div>

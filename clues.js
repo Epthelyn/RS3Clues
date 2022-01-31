@@ -25,92 +25,141 @@ const _clues = function(){
         $('.simSubmit').on('click', function(){
             const parentAction = $(this).parent().attr('simAction');
             const tier = $('#sim_tier').val();
+
+            $(this).val("Opening, please wait...");
             
-            if(parentAction == "roll_single"){
-                const result = simulate(tier,1);
-                console.log(result);
+            setTimeout(() => {
+                if(parentAction == "roll_single"){
+                    const result = simulate(tier,1);
+                    console.log(result);
 
-                let output = `You opened 1 casket containing ${result.totalItemRolls} items in total for ${result.obtained.length}/${rates[tier].length} unique log items. You received ${result.dupes.total} duplicate log items.`;
-                if(result.obtained.length){
-                    output += `<br>Items rolled: 
-                                                <table><tr><th>Unique #</th><th>Item</th><th>Casket</th><th>Duplicates</th><th>Drop rate</th></tr>
-                                                ${result.obtained.map((c,i) => `<tr>
-                                                                                    <td>${i+1}</td>
-                                                                                    <td>${c}</td>
-                                                                                    <td>${result.progress[i+1]}</td>
-                                                                                    <td>${(result.dupes.items[c]??0)}</td>
-                                                                                    <td>1/${rates[tier].filter(u => u.item==c)[0].rate}</td>
-                                                                                </tr>`).join("")}</table>`;
+                    let output = `You opened 1 casket containing ${result.totalItemRolls} items in total for ${result.obtained.length}/${rates[tier].length} unique log items. You received ${result.dupes.total} duplicate log items.`;
+                    if(result.obtained.length){
+                        output += `<br>Items rolled: 
+                                                    <table><tr><th>Unique #</th><th>Item</th><th>Casket</th><th>Duplicates</th><th>Drop rate</th></tr>
+                                                    ${result.obtained.map((c,i) => `<tr>
+                                                                                        <td>${i+1}</td>
+                                                                                        <td>${c}</td>
+                                                                                        <td>${result.progress[i+1]}</td>
+                                                                                        <td>${(result.dupes.items[c]??0)}</td>
+                                                                                        <td>1/${rates[tier].filter(u => u.item==c)[0].rate}</td>
+                                                                                    </tr>`).join("")}</table>`;
+                    }
+                    $('.simOutput').html(output);
                 }
-                $('.simOutput').html(output);
-            }
-            else if(parentAction == "roll_multi"){
-                const numCaskets = $('#roll_multi_input').val();
+                else if(parentAction == "roll_multi"){
+                    const numCaskets = $('#roll_multi_input').val();
 
-                if(isNaN(numCaskets) || numCaskets < 1){
-                    alert(`The number of casket must be a number greater than 0.`);
-                    return;
-                }
-                
-                const result = simulate(tier,numCaskets);
-                console.log(result);
+                    if(isNaN(numCaskets) || numCaskets < 1){
+                        alert(`The number of casket must be a number greater than 0.`);
+                        return;
+                    }
+                    
+                    const result = simulate(tier,numCaskets);
+                    console.log(result);
 
-                let output = `You opened ${numCaskets} caskets containing ${result.totalItemRolls} items in total for ${result.obtained.length}/${rates[tier].length} unique log items. You received ${result.dupes.total} duplicate log items.`;
-                if(result.obtained.length){
-                    output += `<br>Items rolled: 
-                                                <table><tr><th>Unique #</th><th>Item</th><th>Casket</th><th>Duplicates</th><th>Drop rate</th></tr>
-                                                ${result.obtained.map((c,i) => `<tr>
-                                                                                    <td>${i+1}</td>
-                                                                                    <td>${c}</td>
-                                                                                    <td>${result.progress[i+1]}</td>
-                                                                                    <td>${(result.dupes.items[c]??0)}</td>
-                                                                                    <td>1/${rates[tier].filter(u => u.item==c)[0].rate}</td>
-                                                                                </tr>`).join("")}</table>`;
+                    let output = `You opened ${numCaskets} caskets containing ${result.totalItemRolls} items in total for ${result.obtained.length}/${rates[tier].length} unique log items. You received ${result.dupes.total} duplicate log items.`;
+                    if(result.obtained.length){
+                        output += `<br>Items rolled: 
+                                                    <table><tr><th>Unique #</th><th>Item</th><th>Casket</th><th>Duplicates</th><th>Drop rate</th></tr>
+                                                    ${result.obtained.map((c,i) => `<tr>
+                                                                                        <td>${i+1}</td>
+                                                                                        <td>${c}</td>
+                                                                                        <td>${result.progress[i+1]}</td>
+                                                                                        <td>${(result.dupes.items[c]??0)}</td>
+                                                                                        <td>1/${rates[tier].filter(u => u.item==c)[0].rate}</td>
+                                                                                    </tr>`).join("")}</table>`;
+                    }
+                    $('.simOutput').html(output);
                 }
-                $('.simOutput').html(output);
-            }
-            else if(parentAction == "roll_log"){
-                const result = simulate(tier);
-                console.log(result);
+                else if(parentAction == "roll_log"){
+                    const result = simulate(tier);
+                    console.log(result);
 
-                let output = `You opened ${result.iterations} caskets containing ${result.totalItemRolls} items in total for ${result.obtained.length}/${rates[tier].length} unique log items. You received ${result.dupes.total} duplicate log items.`;
-                if(result.obtained.length){
-                    output += `<br>Items rolled: 
-                                                <table><tr><th>Unique #</th><th>Item</th><th>Casket</th><th>Duplicates</th><th>Drop rate</th></tr>
-                                                ${result.obtained.map((c,i) => `<tr>
-                                                                                    <td>${i+1}</td>
-                                                                                    <td>${c}</td>
-                                                                                    <td>${result.progress[i+1]}</td>
-                                                                                    <td>${(result.dupes.items[c]??0)}</td>
-                                                                                    <td>1/${rates[tier].filter(u => u.item==c)[0].rate}</td>
-                                                                                </tr>`).join("")}</table>`;
+                    let output = `You opened ${result.iterations} caskets containing ${result.totalItemRolls} items in total for ${result.obtained.length}/${rates[tier].length} unique log items. You received ${result.dupes.total} duplicate log items.`;
+                    if(result.obtained.length){
+                        output += `<br>Items rolled: 
+                                                    <table><tr><th>Unique #</th><th>Item</th><th>Casket</th><th>Duplicates</th><th>Drop rate</th></tr>
+                                                    ${result.obtained.map((c,i) => `<tr>
+                                                                                        <td>${i+1}</td>
+                                                                                        <td>${c}</td>
+                                                                                        <td>${result.progress[i+1]}</td>
+                                                                                        <td>${(result.dupes.items[c]??0)}</td>
+                                                                                        <td>1/${rates[tier].filter(u => u.item==c)[0].rate}</td>
+                                                                                    </tr>`).join("")}</table>`;
+                    }
+                    $('.simOutput').html(output);
                 }
-                $('.simOutput').html(output);
-            }
-            else if(parentAction == "roll_nth"){
-                const numUniques = $('#roll_nth_input').val();
-                
-                if(isNaN(numUniques) || numUniques < 1 || numUniques > rates[tier].length){
-                    alert(`The number of uniques must be a number from 1 to ${rates[tier].length}.`);
-                    return;
+                else if(parentAction == "roll_nth"){
+                    const numUniques = $('#roll_nth_input').val();
+                    
+                    if(isNaN(numUniques) || numUniques < 1 || numUniques > rates[tier].length){
+                        alert(`The number of uniques must be a number from 1 to ${rates[tier].length}.`);
+                        return;
+                    }
+
+                    const result = simulate(tier,Infinity,numUniques);
+                    console.log(result);
+                    let output = `You opened ${result.iterations} caskets containing ${result.totalItemRolls} items in total for ${result.obtained.length}/${rates[tier].length} unique log items. You received ${result.dupes.total} duplicate log items.`;
+                    if(result.obtained.length){
+                        output += `<br>Items rolled: 
+                                                    <table><tr><th>Unique #</th><th>Item</th><th>Casket</th><th>Duplicates</th><th>Drop rate</th></tr>
+                                                    ${result.obtained.map((c,i) => `<tr>
+                                                                                        <td>${i+1}</td>
+                                                                                        <td>${c}</td>
+                                                                                        <td>${result.progress[i+1]}</td>
+                                                                                        <td>${(result.dupes.items[c]??0)}</td>
+                                                                                        <td>1/${rates[tier].filter(u => u.item==c)[0].rate}</td>
+                                                                                    </tr>`).join("")}</table>`;
+                    }
+                    $('.simOutput').html(output);
+                }
+                else if(parentAction == "average_nth"){
+                    const numUniques = $('#average_nth_input_uniques').val();
+                    const numIterations = $('#average_nth_input_iterations').val();
+
+                    if(isNaN(numUniques) || numUniques < 1 || numUniques > rates[tier].length){
+                        alert(`The number of uniques must be a number from 1 to ${rates[tier].length}.`);
+                        return;
+                    }
+
+                    if(isNaN(numIterations) || numIterations < 1){
+                        alert(`The number of iterations must be a number greater than 0.`);
+                        return;
+                    }
+
+                    const result = averageForNthUnique(tier,numUniques,numIterations);
+                    console.log(result);
+
+                    let output = `${numUniques} uniques were obtained after an average of <b>${result}</b> caskets.`;
+                    $('.simOutput').html(output);
+                }
+                else if(parentAction == "average_complete"){
+                    const numIterations = $('#average_complete_input_iterations').val();
+
+                    if(isNaN(numIterations) || numIterations < 1){
+                        alert(`The number of iterations must be a number greater than 0.`);
+                        return;
+                    }
+
+                    const result = averageForFullProgress(tier,numIterations);
+                    console.log(result);
+
+                    let output = `Log completion was achieved after an average of <b>${result.avg[rates[tier].length].toFixed(1)}</b> caskets, with a minimum of <b>${result.min[rates[tier].length]}</b> and a maximum of <b>${result.max[rates[tier].length]}</b>.<br>`;
+                    output += `The values for progress through all uniques can be found in the table below:`;
+                    output += `<table><tr><th>Unique #</th><th>Average casket</th><th>Min Casket</th><th>Max Casket</th></tr>`;
+                    for(k in result.avg){
+                        if(k == 0) continue;
+                        output += `<tr><td>${k}</td><td>${result.avg[k].toFixed(1)}</td><td>${result.min[k]}</td><td>${result.max[k]}</td></tr>`
+                    }
+                    output += `</table>`;
+                    $('.simOutput').html(output);
                 }
 
-                const result = simulate(tier,Infinity,numUniques);
-                console.log(result);
-                let output = `You opened ${result.iterations} caskets containing ${result.totalItemRolls} items in total for ${result.obtained.length}/${rates[tier].length} unique log items. You received ${result.dupes.total} duplicate log items.`;
-                if(result.obtained.length){
-                    output += `<br>Items rolled: 
-                                                <table><tr><th>Unique #</th><th>Item</th><th>Casket</th><th>Duplicates</th><th>Drop rate</th></tr>
-                                                ${result.obtained.map((c,i) => `<tr>
-                                                                                    <td>${i+1}</td>
-                                                                                    <td>${c}</td>
-                                                                                    <td>${result.progress[i+1]}</td>
-                                                                                    <td>${(result.dupes.items[c]??0)}</td>
-                                                                                    <td>1/${rates[tier].filter(u => u.item==c)[0].rate}</td>
-                                                                                </tr>`).join("")}</table>`;
-                }
-                $('.simOutput').html(output);
-            }
+                $(this).val("Open caskets");
+
+  
+            },1000);
         });
 
         $.ajax({
@@ -195,12 +244,21 @@ const _clues = function(){
             total: 0,
             items: {}
         }
+        let rerollProgress = 0;
+        let rerollProgressForReroll = 3;
 
         // console.log(`Stopping at ${stopAtUniques} uniques`);
 
         while(iteration <= stopAt && uniquesObtained.length < rates[tier].length && (!stopAtUniques || (stopAtUniques && uniquesObtained.length < stopAtUniques))){
             const r = roll(tier);
             totalItemRolls += r.rollCount;
+
+            if($('#reroll').is(':checked') && !r.rolls.length){
+                if(rerollProgress >= rerollProgressForReroll){
+                    rerollProgress-=3;
+                    continue;
+                }
+            }
 
             r.rolls.forEach(item => {
                 if(!uniquesObtained.includes(item)){
@@ -217,6 +275,7 @@ const _clues = function(){
             });
 
             iteration++;
+            rerollProgress++;
         }
 
         return{
